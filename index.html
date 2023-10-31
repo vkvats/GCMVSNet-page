@@ -185,20 +185,16 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-          <h3>Architecture of FMT</h3>
+          <h3>Architecture of GC-MVSNet</h3>
             <hr style="margin-top:0px">
-            <img class="img-fluid" src="static/images/gcmvsnet.jpg" alt="FMT" >
+            <img class="img-fluid" src="static/images/gcmvsnet.jpg" alt="GCMVSNet" height="60%">
           <p class="text-justify">
-            Different from a typical one-to-one matching task between two views, 
-            MVS tackles a one-to-many matching problem, where context information of all views should be considered simultaneously. 
-            To this end, we propose the FMT to capture long-range context information within and across images.
-            The architecture of FMT is illustrated above. 
-            We follow <a href="https://github.com/magicleap/SuperGluePretrainedNetwork/" target="_blank">SuperGlue</a> and add positional encoding, 
-            which implicitly enhances positional consistency and makes FMT robust to feature maps with different resolutions.
-            Each view's corresponding flattened feature map is processed by Na attention blocks sequentially. 
-            Within each attention block, the reference feature and each source feature firstly compute intra-attention with shared weights, 
-            where all features are updated with their respective embedded global context information.
-            Afterwards, the unidirectional inter-attention is performed, with which is updated according to retrieved information from the reference feature.
+            The GC-MVSNet architecture. The GC module is applied at the end of each stage. 
+            It takes the estimated reference view depth, $M$ source view ground truths and 
+            their camera parameters to perform a multi-view geometric consistency check. It 
+            generates a per-pixel penalty for reference view, which is element-wise 
+            multiplied with per-pixel depth error to generate stage loss L_i. Per-pixel depth error 
+            is calculated using cross-entropy loss. All stage losses are added to produce the final loss.
           </p>
 <!--           <h4 style="margin-top:20px; margin-bottom:20px; color:#717980">Comparison results on Tanks and Temples Benchmark</h4>
             <img class="img-fluid" src="images/TnT-score.png" alt="tnt-score">
